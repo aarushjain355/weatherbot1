@@ -1,0 +1,8 @@
+prefix=/home/aarush/weatherbot1/devel
+
+Name: weatherbotproject
+Description: Description of weatherbotproject
+Version: 0.0.0
+Cflags: -I/home/aarush/weatherbot1/devel/include -I/home/aarush/weatherbot1/src/weatherbotproject/include
+Libs: -L${prefix}/lib -lweatherbotproject
+Requires: roscpp rospy std_msgs

@@ -1,0 +1,2 @@
+weatherbotproject
+-DCATKIN_DEVEL_PREFIX=/home/aarush/weatherbot1/devel -DCMAKE_INSTALL_PREFIX=/home/aarush/weatherbot1/install -G Unix Makefiles
