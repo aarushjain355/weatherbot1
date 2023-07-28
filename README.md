@@ -1,0 +1,1 @@
+An autonomous ROS Arduino robot that travles and avoids osbtacles depending on the weather conditions of the city of your choice. Integreates a  user-interactive GUI component which asks the user for the city they would like the robot to travel through. Implements a simple obstacle avoidance algorithm and a PID control loop. 
