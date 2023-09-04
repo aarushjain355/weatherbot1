@@ -3,6 +3,7 @@
 import rospy
 from std_msgs.msg import UInt32, Float32MultiArray, String
 from weatherbotproject.srv import WeatherService, WeatherServiceResponse
+import time
 
 kP = 0
 kI = 0
@@ -15,7 +16,7 @@ clear_and_sunny = ["Clear Sky", "Sunny"]
 cloudy_and_overcast = ["Partly cloudy", "Cloudy", "Overcast"]
 precipitation = ["Light rain", "Moderate rain", "Heavy rain", "Showers", "Light snow", "Moderate snow", "Heavy snow", "Snow showers"]
 severe_weather = ["Mist", "Foggy", "Hazy", "Thunderstorms", "Tornado", "Dust storm", "Sandstorm"]
-
+previous_time = time.time() * 1000
 
 def generate_PID_LOOP(direction, rotateright):
 
@@ -28,12 +29,20 @@ def generate_PID_LOOP(direction, rotateright):
         setpoint = 155
 
 
+    current_time = time.time() * 1000  # Get the current time in milliseconds
+    dt = (current_time - previous_time) / 1000.0  # Calculate time interval in seconds
+
     error = setpoint - current_value
     proportional = kP * error
-    integral = integral + kI * error
-    derivative = kD * (error - previous_error)
+
+    if error == 0:
+        integral = 0
+    else:
+        integral = integral + kI * error
+    derivative = kD * (error - previous_error) / dt
     motor_speed = proportional + integral + derivative
     previous_error = error 
+    previous_time = current_time 
     current_value = current_value + motor_speed
     
     list1.append(motor_speed)
@@ -126,5 +135,8 @@ if __name__ == "__main__":
     rospy.init_node("Main_Node")
     Weather_Service = rospy.Service("Weather_Update", WeatherService, status_code)
    
+
+    rospy.spin()
+
 
     rospy.spin()
