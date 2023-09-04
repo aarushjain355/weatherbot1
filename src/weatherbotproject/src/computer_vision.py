@@ -31,8 +31,8 @@ def calculate_angle(first, second, third):
 
 if __name__ == "__main__":
 
-    #rospy.init_node("Emergency Detection")
-    #motion_publisher = rospy.Publisher('position', String, queue_size=10)
+    rospy.init_node("Emergency Detection")
+    motion_publisher = rospy.Publisher('position', String, queue_size=10)
 
     with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as pose:
         while cap.isOpened():
@@ -73,10 +73,7 @@ if __name__ == "__main__":
                 diff3 = landmarks[mp_pose.PoseLandmark.LEFT_WRIST.value].y - landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].y
                 diff4 = landmarks[mp_pose.PoseLandmark.RIGHT_WRIST.value].y - landmarks[mp_pose.PoseLandmark.RIGHT_SHOULDER.value].x
                 
-                print(diff2)
-                print(diff3)
-                print(diff4)
-                print("YOOOO")
+    
                 
                 if right_angle_leg < 100 and left_angle_leg < 100: #and right_angle_arm < 80 and left_angle_arm < 80 and abs(diff1) > abs(diff2) and diff3 > 0 and diff4 > 0:
 
@@ -97,8 +94,8 @@ if __name__ == "__main__":
                            tuple(np.multiply(left_shoulder, [640, 480]).astype(int)), 
                            cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA)
                 
-                #motion_publisher.publish(message)
-                #message = "dont know"
+                motion_publisher.publish(message)
+                
                 print(message)
             except:
 
@@ -115,3 +112,4 @@ if __name__ == "__main__":
 
         cap.release()
         cv2.destroyAllWindows()
+
